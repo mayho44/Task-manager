@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Manager</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url("{% static 'tasks/images/81784fe61a55530952362176f387b489.jpg' %}") center/cover no-repeat;
+      position: relative;
+    }
+
+    
+    .nav-auth {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    
+    .btn-auth {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    
+    .btn-login {
+      color: #0f2a4a;
+      border: 2px solid #0f2a4a;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-login:hover {
+      background-color: #0f2a4a;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    
+    .btn-signup {
+      color: #ffffff;
+      background-color: #2563eb;
+      border: 2px solid #2563eb;
+    }
+
+    .btn-signup:hover {
+      background-color: #1d4ed8;
+      border-color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    #header h1 a {
+      display: block;
+      text-align: center;
+      font-size: 2.5rem;
+      color: #0f2a4a; 
+      font-weight: 700;
+      text-decoration: none;
+      margin-bottom: 24px;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    #header h1 a:hover {
+      color: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    .content-box {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 32px 40px;
+      height: 400px;
+      width: 360px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px; 
+    }
+
+    .content-box p {
+      color: #333333;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.5;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .content-box a {
+      display: inline-block;
+      color: #2563eb; 
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 10px 20px;
+      border: 2px solid #2563eb;
+      border-radius: 8px; 
+      transition: all 0.2s ease;
+    }
+
+    .content-box a:hover {
+      background-color: #2563eb; 
+      color: #ffffff;   
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="nav-auth">
+    <a href="{% url 'log_in' %}" class="btn-auth btn-login">Log In</a>
+    <a href="{% url 'register' %}" class="btn-auth btn-signup">Sign Up</a>
+  </div>
+
+  <div>
+    <div id="header">
+      <h1><a href="#">Task Manager</a></h1>
+    </div>
+
+    <div class="content-box">
+      <p>This is your path for more organized work flow</p>
+      <a href="{% url 'all_tasks' %}">View your tasks</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Task Manager</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url("{% static 'tasks/images/81784fe61a55530952362176f387b489.jpg' %}") center/cover no-repeat;
+    }
+
+    #header h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #0f2a4a;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .signup-box {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 40px;
+      width: 360px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #333333;
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #cccccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus {
+      border-color: #2563eb;
+    }
+
+    .btn-signup {
+      width: 100%;
+      padding: 12px;
+      background-color: #2563eb;
+      color: #ffffff;
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .btn-signup:hover {
+      background-color: #1d4ed8;
+      border-color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.9rem;
+      color: #555555;
+    }
+
+    .login-link a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .error-box {
+      background-color: #fef2f2;
+      border: 1px solid #f87171;
+      color: #dc2626;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .error-box p {
+      margin: 2px 0;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="header">
+      <h1>Task Manager</h1>
+    </div>
+
+    <div class="signup-box">
+
+      {% if form.errors %}
+        <div class="error-box">
+          {% for field in form %}
+            {% for error in field.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <form id="signup-form" action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autocomplete="username" value="{{ form.username.value|default:'' }}">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password1" required autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" id="confirm_password" name="password2" required autocomplete="new-password">
+        </div>
+
+        <button type="submit" class="btn-signup">Sign Up</button>
+      </form>
+
+      <div class="login-link">
+        Already have an account? <a href="{% url 'log_in' %}">Log in</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.addEventListener('pageshow', function(event){
+      if(event.persisted){
+        window.location.reload();
+      }
+    });
+  </script>
+</body>
+</html>

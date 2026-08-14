@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Display</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 20px;
+       background: url("{% static 'tasks/images/a63435c88be2e84bc150a36ec87f1271.jpg' %}") center/cover no-repeat;
+    }
+
+    .card {
+      background-color: #f7f1ec;
+      width: 100%;
+      max-width: 560px;
+      padding: 34px 40px 40px;
+      border: 1px solid #d8c9c0;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      letter-spacing: 4px;
+      font-size: 2rem;
+      color: #4a4038;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid #d8c9c0;
+      margin: 18px 0 28px;
+    }
+
+    .priority-badge {
+      position: absolute;
+      top: 34px;
+      right: 40px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 12px;
+      border-radius: 12px;
+      color: #fff;
+      background-color: #8a8a8a;
+    }
+
+    .priority-badge.high {
+      background-color: #a8433a;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field .field-label {
+      display: block;
+      font-size: 0.8rem;
+      color: #7a6d62;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .field .field-value {
+      font-size: 1.05rem;
+      color: #4a4038;
+      padding-bottom: 6px;
+      border-bottom: 1px dotted #b8a99c;
+    }
+
+    .field .field-value.title-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .card.high-priority .field-value.title-value {
+      color: #a8433a;
+    }
+
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-bottom: 6px;
+    }
+
+    .tag-pill {
+      display: inline-block;
+      background-color: #4a4038;
+      color: #f7f1ec;
+      font-size: 0.8rem;
+      padding: 4px 14px;
+      border-radius: 999px;
+    }
+
+    .card.high-priority .tag-pill {
+      background-color: #a8433a;
+    }
+
+    .no-tags {
+      font-size: 0.85rem;
+      color: #b8a99c;
+      font-style: italic;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .actions a.return {
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      padding: 9px 26px;
+      color: #fff;
+      background-color: #e07b39;
+      transition: transform 0.15s ease;
+    }
+
+    .actions a.return:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card {% if task.priority == 'high' %}high-priority{% endif %}">
+    <h1>Task Manager</h1>
+    <span class="priority-badge {% if task.priority == 'high' %}high{% endif %}">{{ task.priority }}</span>
+    <hr class="divider">
+
+    <div class="field">
+      <span class="field-label">Title</span>
+      <div class="field-value title-value">{{ task.title }}</div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">Description</span>
+      <div class="field-value">{{ task.description }}</div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">Due date</span>
+      <div class="field-value">{{ task.due_date }}</div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">Category</span>
+      <div class="field-value">{{ task.category.category_name }}</div>
+    </div>
+
+    <div class="field">
+      <span class="field-label">Tags</span>
+      <div class="tags-wrap">
+        {% for tag in task.tags.all %}
+          <span class="tag-pill">{{ tag }}</span>
+        {% empty %}
+          <span class="no-tags">No tags</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="{% url 'all_tasks' %}" class="return">Return</a>
+    </div>
+  </div>
+    <script>
+    window.addEventListener('pageshow', function(event){
+      if(event.persisted){
+        window.location.reload();
+      }
+    });
+  </script>
+
+</body>
+</html>

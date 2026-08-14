@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Task Manager</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: url("{% static 'tasks/images/81784fe61a55530952362176f387b489.jpg' %}") center/cover no-repeat;
+    }
+
+    #header h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #0f2a4a;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .login-box {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 40px;
+      width: 360px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #333333;
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #cccccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-group input:focus {
+      border-color: #2563eb;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background-color: #2563eb;
+      color: #ffffff;
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .btn-login:hover {
+      background-color: #1d4ed8;
+      border-color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .error-message {
+      color: #dc2626;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div id="header">
+      <h1>Task Manager</h1>
+    </div>
+
+    <div class="login-box">
+      {% if form.errors %}
+        <p class="error-message">Invalid username or password.</p>
+      {% endif %}
+
+      <form method="post" action="{% url 'log_in' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password">
+        </div>
+        {%if request.GET.next %}
+        <input type="hidden" name="next" value="{{request.GET.next}}"/>
+        {%endif%}
+        <button type="submit" class="btn-login">Log In</button>
+      </form>
+    </div>
+  </div>
+  <script>
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
+</script>
+</body>
+</html>
